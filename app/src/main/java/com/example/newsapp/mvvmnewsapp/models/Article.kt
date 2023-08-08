@@ -3,7 +3,6 @@ package com.example.newsapp.mvvmnewsapp.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
-
 @Entity(tableName = "articles")
 data class Article(
     //we set it to null because not every article will have an id due to we get a lot of articles from retrofit that we
@@ -18,8 +17,7 @@ data class Article(
     val title: String?,
     val url: String?,
     val urlToImage: String?
-
-) : Serializable {
+): Serializable {
     override fun hashCode(): Int {
         var result = id.hashCode()
         if (url.isNullOrEmpty()) {

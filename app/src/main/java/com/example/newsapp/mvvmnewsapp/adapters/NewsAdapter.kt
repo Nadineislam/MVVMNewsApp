@@ -1,15 +1,13 @@
 package com.example.newsapp.mvvmnewsapp.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.newsapp.R
+import com.example.newsapp.databinding.ItemArticleBinding
 import com.example.newsapp.mvvmnewsapp.models.Article
-import kotlinx.android.synthetic.main.item_article.view.*
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     //when i was put list here as a parameter and when i add new article it added to the list and call adapter.notify data set changed
@@ -18,20 +16,21 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     //another advantage is that it's happen in background so it's not disturb main thread
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_article, parent, false)
+            ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val article = differ.currentList[position]
-        holder.item.apply {
-            Glide.with(this).load(article.urlToImage).into(img_article)
-            tv_article_publishedAt.text = article.publishedAt
-            tv_article_name.text = article.source?.name
-            tv_article_description.text = article.description
-            tv_article_title.text = article.title
-            setOnClickListener { onItemClickListener?.let { it(article) } }
+        Glide.with(holder.itemView).load(article.urlToImage).into(holder.binding.imgArticle)
+        holder.binding.apply {
+            tvArticlePublishedAt.text = article.publishedAt
+            tvArticleName.text = article.source?.name
+            tvArticleDescription.text = article.description
+            tvArticleTitle.text = article.title
+
         }
+        holder.itemView.setOnClickListener { onItemClickListener?.let { it(article) } }
 
     }
 
@@ -39,7 +38,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
         return differ.currentList.size
     }
 
-    inner class NewsViewHolder(val item: View) : RecyclerView.ViewHolder(item)
+    inner class NewsViewHolder(val binding: ItemArticleBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     //this is the tool that compares the two list and only update changed items
     private val differCallBack = object : DiffUtil.ItemCallback<Article>() {

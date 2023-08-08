@@ -10,18 +10,21 @@ import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.newsapp.mvvmnewsapp.NewsApplication
+import com.example.newsapp.mvvmnewsapp.core.NewsApplication
 import com.example.newsapp.mvvmnewsapp.models.Article
 import com.example.newsapp.mvvmnewsapp.models.NewsResponse
 import com.example.newsapp.mvvmnewsapp.repository.NewsRepository
 import com.example.newsapp.mvvmnewsapp.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
+import javax.inject.Inject
 
 //in view model we call fun that created in repo and we will also handle the responses for our requests and then we will have live data
 //live data object that will notify all of our fragments about changes regarding these requests
-class NewsViewModel(app: Application, private val repository: NewsRepository) :
+@HiltViewModel
+class NewsViewModel @Inject constructor (app: Application, private val repository: NewsRepository) :
     AndroidViewModel(app) {
 
     //this liveData for our fragments can subscribe to that liveData as observers and whenever we post changes to the live data

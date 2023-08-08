@@ -1,32 +1,28 @@
 package com.example.newsapp.mvvmnewsapp.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp.R
-import com.example.newsapp.mvvmnewsapp.db.ArticleDatabase
-import com.example.newsapp.mvvmnewsapp.repository.NewsRepository
-import kotlinx.android.synthetic.main.activity_news.*
+import com.example.newsapp.databinding.ActivityNewsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class NewsActivity : AppCompatActivity() {
-    lateinit var viewModel: NewsViewModel
+    private lateinit var binding: ActivityNewsBinding
+    val viewModel: NewsViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news)
-        val newsRepository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(application, newsRepository)
-        viewModel =
-            ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
+        binding = ActivityNewsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-//      nav_view.setupWithNavController(newsNavHostFragment.findNavController())
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.newsNavHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        nav_view.setupWithNavController(navController)
+        binding.navView.setupWithNavController(navController)
 
 
     }

@@ -1,8 +1,9 @@
 package com.example.newsapp.mvvmnewsapp.ui.fragments
 
-
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
+import com.example.newsapp.databinding.FragmentBreakingNewsBinding
 import com.example.newsapp.mvvmnewsapp.adapters.NewsAdapter
 import com.example.newsapp.mvvmnewsapp.ui.NewsActivity
 import com.example.newsapp.mvvmnewsapp.ui.NewsViewModel
@@ -18,9 +20,20 @@ import com.example.newsapp.mvvmnewsapp.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsapp.mvvmnewsapp.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
-class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
+class BreakingNewsFragment : Fragment() {
+    private lateinit var binding: FragmentBreakingNewsBinding
     lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentBreakingNewsBinding.inflate(inflater)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
@@ -73,7 +86,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rv_breakingNews.apply {
+        binding.rvBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@BreakingNewsFragment.scrollListener)
@@ -81,12 +94,12 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun hideProgressBar() {
-        pb_breakingNews.visibility = View.INVISIBLE
+        binding.pbBreakingNews.visibility = View.INVISIBLE
         isLoading = false
     }
 
     private fun showProgressBar() {
-        pb_breakingNews.visibility = View.VISIBLE
+        binding.pbBreakingNews.visibility = View.VISIBLE
         isLoading = true
     }
 
