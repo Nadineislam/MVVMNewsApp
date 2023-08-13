@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.example.newsapp.mvvmnewsapp.api.NewsApi
 import com.example.newsapp.mvvmnewsapp.db.ArticleDao
 import com.example.newsapp.mvvmnewsapp.db.ArticleDatabase
-import com.example.newsapp.mvvmnewsapp.repository.NewsRepository
 import com.example.newsapp.mvvmnewsapp.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -58,8 +57,5 @@ object AppModule {
     @Provides
     fun provideApiService(retrofit: Retrofit): NewsApi = retrofit.create(NewsApi::class.java)
 
-    @Singleton
-    @Provides
-    fun providesRepository(articleDao: ArticleDao,newsAPI: NewsApi) = NewsRepository(articleDao,newsAPI)
 
 }
