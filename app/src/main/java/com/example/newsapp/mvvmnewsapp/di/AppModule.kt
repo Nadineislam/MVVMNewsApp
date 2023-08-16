@@ -2,10 +2,10 @@ package com.example.newsapp.mvvmnewsapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.newsapp.mvvmnewsapp.api.NewsApi
-import com.example.newsapp.mvvmnewsapp.db.ArticleDao
-import com.example.newsapp.mvvmnewsapp.db.ArticleDatabase
-import com.example.newsapp.mvvmnewsapp.util.Constants.Companion.BASE_URL
+import com.example.newsapp.mvvmnewsapp.data.api.NewsApi
+import com.example.newsapp.mvvmnewsapp.data.db.ArticleDao
+import com.example.newsapp.mvvmnewsapp.data.db.ArticleDatabase
+import com.example.newsapp.mvvmnewsapp.data.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

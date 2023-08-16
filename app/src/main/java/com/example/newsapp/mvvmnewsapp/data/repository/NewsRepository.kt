@@ -1,7 +1,7 @@
-package com.example.newsapp.mvvmnewsapp.repository
+package com.example.newsapp.mvvmnewsapp.data.repository
 
-import com.example.newsapp.mvvmnewsapp.api.NewsApi
-import com.example.newsapp.mvvmnewsapp.db.ArticleDao
+import com.example.newsapp.mvvmnewsapp.data.api.NewsApi
+import com.example.newsapp.mvvmnewsapp.data.db.ArticleDao
 import com.example.newsapp.mvvmnewsapp.models.Article
 import javax.inject.Inject
 

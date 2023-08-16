@@ -1,4 +1,4 @@
-package com.example.newsapp.mvvmnewsapp.ui
+package com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel
 
 
 import android.app.Application
@@ -13,8 +13,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsapp.mvvmnewsapp.core.NewsApplication
 import com.example.newsapp.mvvmnewsapp.models.Article
 import com.example.newsapp.mvvmnewsapp.models.NewsResponse
-import com.example.newsapp.mvvmnewsapp.repository.NewsRepository
-import com.example.newsapp.mvvmnewsapp.util.Resource
+import com.example.newsapp.mvvmnewsapp.data.repository.NewsRepository
+import com.example.newsapp.mvvmnewsapp.data.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response

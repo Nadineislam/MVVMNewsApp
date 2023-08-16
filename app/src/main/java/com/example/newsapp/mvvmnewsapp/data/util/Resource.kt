@@ -1,4 +1,4 @@
-package com.example.newsapp.mvvmnewsapp.util
+package com.example.newsapp.mvvmnewsapp.data.util
 
 //This is class that recommended by google to be used to wrap around our network responses and that will be a generic class
 //it's very useful to differentiate between successful and error responses and also help us to handle the loading state

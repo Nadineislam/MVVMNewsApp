@@ -1,4 +1,4 @@
-package com.example.newsapp.mvvmnewsapp.ui.fragments
+package com.example.newsapp.mvvmnewsapp.presentation.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentSavedNewsBinding
-import com.example.newsapp.mvvmnewsapp.adapters.NewsAdapter
-import com.example.newsapp.mvvmnewsapp.ui.NewsActivity
-import com.example.newsapp.mvvmnewsapp.ui.NewsViewModel
+import com.example.newsapp.mvvmnewsapp.presentation.adapters.NewsAdapter
+import com.example.newsapp.mvvmnewsapp.presentation.ui.activities.NewsActivity
+import com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 

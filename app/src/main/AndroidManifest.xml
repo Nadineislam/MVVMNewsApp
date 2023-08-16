@@ -22,7 +22,7 @@
             android:value="false" />
         <activity
 
-            android:name="com.example.newsapp.mvvmnewsapp.ui.NewsActivity"
+            android:name="com.example.newsapp.mvvmnewsapp.presentation.ui.activities.NewsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.newsapp.mvvmnewsapp.db
+package com.example.newsapp.mvvmnewsapp.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
