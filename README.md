@@ -7,6 +7,7 @@
 * Displays news from USA.
 
 #Libraries And Technoligies used
+
 MVVM : Android architecture used to saperate logic code from ui and save the application state in case the configuration changes.
 Retrofit + Gson Converter : Fetch news from rest api as a gson file and convert it to a kotlin object.
 Room : Save the articles into a local database.
