@@ -29,7 +29,6 @@ class ArticleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //here we now can access to the view model that we created in our news activity
         viewModel = (activity as NewsActivity).viewModel
         val article = args.article
         binding.webView.apply {

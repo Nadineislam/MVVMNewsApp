@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,8 @@ import com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel.NewsViewModel
 import com.example.newsapp.mvvmnewsapp.data.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsapp.mvvmnewsapp.data.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class BreakingNewsFragment : Fragment() {
     private lateinit var binding: FragmentBreakingNewsBinding
@@ -45,42 +49,31 @@ class BreakingNewsFragment : Fragment() {
             }
             findNavController().navigate(
                 R.id.action_breakingNewsFragment_to_articleFragment, bundle
-                //here when i wrote bundle i attached our arguments to our navigation
 
             )
 
         }
-        //we now call our news liveData and call observe on that so we subscribe to all the changes regarding their live data
-        //and update our recycler view
-        viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles.toList())
-                        val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.breakingNewsPage == totalPages
-                        if (isLastPage) {
+lifecycleScope.launch {
+    repeatOnLifecycle(Lifecycle.State.STARTED){
+        viewModel.breakingNews.collect{response->
+            when(response){
+                is Resource.Loading->showProgressBar()
+                is Resource.Success->{hideProgressBar()
+                response.data?.let { newsResponse ->
+                    newsAdapter.differ.submitList(newsResponse.articles.toList())
+                    val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
+                    isLastPage = viewModel.breakingNewsPage == totalPages
+                    if (isLastPage) {
                             rv_breakingNews.setPadding(0, 0, 0, 0)
                         }
-
-
-                    }
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
-
+                }}
+                is Resource.Error->response.message?.let { message->
+                    Toast.makeText(activity,"An error occurred: $message",Toast.LENGTH_LONG).show()
                 }
             }
-
-        })
+        }
+    }
+}
 
     }
 

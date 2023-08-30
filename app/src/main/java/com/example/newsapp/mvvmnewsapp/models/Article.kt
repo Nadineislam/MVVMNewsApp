@@ -5,8 +5,6 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 @Entity(tableName = "articles")
 data class Article(
-    //we set it to null because not every article will have an id due to we get a lot of articles from retrofit that we
-    //don't save on our local database so we don't need id for that
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val author: String?,

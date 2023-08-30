@@ -9,7 +9,9 @@ import android.widget.AbsListView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,7 @@ import com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel.NewsViewModel
 import com.example.newsapp.mvvmnewsapp.data.util.Constants
 import com.example.newsapp.mvvmnewsapp.data.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.example.newsapp.mvvmnewsapp.data.util.Resource
+import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -51,7 +54,6 @@ class SearchNewsFragment : Fragment() {
             }
             findNavController().navigate(
                 R.id.action_searchNewsFragment_to_articleFragment, bundle
-                //here when i wrote bundle i attached our arguments to our navigation
 
             )
 
@@ -69,32 +71,28 @@ class SearchNewsFragment : Fragment() {
                 }
             }
         }
-        viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles.toList())
-                        val totalPages = newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.searchNewsPage == totalPages
-                        if (isLastPage) {
-                            rv_searchNews.setPadding(0, 0, 0, 0)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.searchNews.collect{response->
+                    when(response){
+                        is Resource.Loading->showProgressBar()
+                        is Resource.Success->{hideProgressBar()
+                            response.data?.let { newsResponse ->
+                                newsAdapter.differ.submitList(newsResponse.articles.toList())
+                                val totalPages = newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
+                                isLastPage = viewModel.breakingNewsPage == totalPages
+                                if (isLastPage) {
+                                    rv_breakingNews.setPadding(0, 0, 0, 0)
+                                }
+                            }}
+                        is Resource.Error->response.message?.let { message->
+                            Toast.makeText(activity,"An error occurred: $message",Toast.LENGTH_LONG).show()
                         }
                     }
-
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
                 }
             }
-        })
+        }
+
     }
 
     private fun setUpRecyclerView() {

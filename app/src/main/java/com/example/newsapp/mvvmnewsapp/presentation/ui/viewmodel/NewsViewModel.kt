@@ -8,7 +8,6 @@ import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.mvvmnewsapp.core.NewsApplication
 import com.example.newsapp.mvvmnewsapp.models.Article
@@ -16,33 +15,30 @@ import com.example.newsapp.mvvmnewsapp.models.NewsResponse
 import com.example.newsapp.mvvmnewsapp.data.repository.NewsRepository
 import com.example.newsapp.mvvmnewsapp.data.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
-//in view model we call fun that created in repo and we will also handle the responses for our requests and then we will have live data
-//live data object that will notify all of our fragments about changes regarding these requests
 @HiltViewModel
-class NewsViewModel @Inject constructor (app: Application, private val repository: NewsRepository) :
+class NewsViewModel @Inject constructor(app: Application, private val repository: NewsRepository) :
     AndroidViewModel(app) {
-
-    //this liveData for our fragments can subscribe to that liveData as observers and whenever we post changes to the live data
-    //like(postValue below) then our fragments get notify automatically about that change and this is very useful when we rotate
-    //our device then we immediately get the current up-to-date data from our view model
-    val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    private val _breakingNews: MutableStateFlow<Resource<NewsResponse>> = MutableStateFlow(Resource.Loading())
+    val breakingNews: StateFlow<Resource<NewsResponse>> = _breakingNews
     var breakingNewsPage = 1
     private var breakingNewsResponse: NewsResponse? = null
 
-    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var searchNewsPage = 1
+    private val _searchNews: MutableStateFlow<Resource<NewsResponse>> = MutableStateFlow(Resource.Loading())
+    val searchNews:StateFlow<Resource<NewsResponse>> = _searchNews
+    private var searchNewsPage = 1
     private var searchNewsResponse: NewsResponse? = null
 
     init {
         getBreakingNews("us")
     }
 
-    //viewModelScope is a coroutine that stays alive only as long as the view model is alive
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         safeBreakingNewsCall(countryCode)
 
@@ -97,40 +93,40 @@ class NewsViewModel @Inject constructor (app: Application, private val repositor
     }
 
     private suspend fun safeBreakingNewsCall(countryCode: String) {
-        breakingNews.postValue(Resource.Loading())
+        _breakingNews.value=Resource.Loading()
         try {
             if (hasInternetConnection()) {
                 val response = repository.getBreakingNews(countryCode, breakingNewsPage)
-                breakingNews.postValue(handleBreakingNewsResponse(response))
+                _breakingNews.value=handleBreakingNewsResponse(response)
 
             } else {
-                breakingNews.postValue(Resource.Error("No Internet Connection"))
+                _breakingNews.value=Resource.Error("No Internet Connection")
             }
 
         } catch (t: Throwable) {
             when (t) {
-                is IOException -> breakingNews.postValue(Resource.Error("Network Failure"))
-                else -> breakingNews.postValue(Resource.Error("Conversion Error"))
+                is IOException -> _breakingNews.value=Resource.Error("Network Failure")
+                else -> _breakingNews.value=Resource.Error("Conversion Error")
             }
 
         }
     }
 
     private suspend fun safeSearchNewsCall(search: String) {
-        searchNews.postValue(Resource.Loading())
+        _searchNews.value=Resource.Loading()
         try {
             if (hasInternetConnection()) {
                 val response = repository.getSearchNews(search, searchNewsPage)
-                searchNews.postValue(handleSearchNewsResponse(response))
+                _searchNews.value=handleSearchNewsResponse(response)
 
             } else {
-                searchNews.postValue(Resource.Error("No Internet Connection"))
+                _searchNews.value=Resource.Error("No Internet Connection")
             }
 
         } catch (t: Throwable) {
             when (t) {
-                is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
-                else -> searchNews.postValue(Resource.Error("Conversion Error"))
+                is IOException -> _searchNews.value=Resource.Error("Network Failure")
+                else -> _searchNews.value=Resource.Error("Conversion Error")
             }
 
         }

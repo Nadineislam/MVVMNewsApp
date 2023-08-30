@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,7 +41,6 @@ class SavedNewsFragment : Fragment() {
             }
             findNavController().navigate(
                 R.id.action_savedNewsFragment_to_articleFragment, bundle
-                //here when i wrote bundle i attached our arguments to our navigation
 
             )
 
@@ -75,10 +73,10 @@ class SavedNewsFragment : Fragment() {
             attachToRecyclerView(rv_savedNews)
         }
 
-        viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { articles ->
+        viewModel.getSavedNews().observe(viewLifecycleOwner) { articles ->
             newsAdapter.differ.submitList(articles)
 
-        })
+        }
     }
 
     private fun setUpRecyclerView() {
