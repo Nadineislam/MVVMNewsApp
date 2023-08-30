@@ -21,7 +21,6 @@ import com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel.NewsViewModel
 import com.example.newsapp.mvvmnewsapp.data.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsapp.mvvmnewsapp.data.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class BreakingNewsFragment : Fragment() {
