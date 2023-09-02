@@ -6,6 +6,12 @@
 * Supports searching news.
 * Displays news from USA.
 
+  <p float="left">
+  <img src="/newsHome.png" width="100" />
+  <img src="/img2.png" width="100" /> 
+  <img src="/img3.png" width="100" />
+</p>
+
 # Libraries And Technoligies used
 
 * MVVM : Android architecture used to saperate logic code from ui and save the application state in case the configuration changes.
