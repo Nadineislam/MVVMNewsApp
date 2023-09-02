@@ -12,6 +12,8 @@
   <img src="/img3.png" width="100" />
 </p>
 
+![newsHome](https://github.com/Nadineislam/MVVMNewsApp/assets/96357226/dcf4e9d3-0fa3-4bee-9863-dd74e55e97b1)
+
 # Libraries And Technoligies used
 
 * MVVM : Android architecture used to saperate logic code from ui and save the application state in case the configuration changes.
