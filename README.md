@@ -6,9 +6,8 @@
 * Supports searching news.
 * Displays news from USA.
 
-<img src="https://github.com/Nadineislam/MVVMNewsApp/assets/96357226/0971b0f4-5bc7-465b-a0e2-870d7d93e048" width="200"/> <img src="https://github.com/Nadineislam/MVVMNewsApp/assets/96357226/0971b0f4-5bc7-465b-a0e2-870d7d93e048" width="300"/>
+<img src="https://github.com/Nadineislam/MVVMNewsApp/assets/96357226/0971b0f4-5bc7-465b-a0e2-870d7d93e048" width="200"/> <img src="https://github.com/Nadineislam/MVVMNewsApp/assets/96357226/0971b0f4-5bc7-465b-a0e2-870d7d93e048" width="200"/>
 
-![newsHome](https://github.com/Nadineislam/MVVMNewsApp/assets/96357226/0971b0f4-5bc7-465b-a0e2-870d7d93e048)
 
 # Libraries And Technoligies used
 
