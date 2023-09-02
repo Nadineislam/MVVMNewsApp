@@ -12,7 +12,7 @@
   <img src="/img3.png" width="100" />
 </p>
 
-![newsHome](https://github.com/Nadineislam/MVVMNewsApp/assets/96357226/dcf4e9d3-0fa3-4bee-9863-dd74e55e97b1)
+![newsHome](https://github.com/Nadineislam/MVVMNewsApp/assets/96357226/0971b0f4-5bc7-465b-a0e2-870d7d93e048)
 
 # Libraries And Technoligies used
 
