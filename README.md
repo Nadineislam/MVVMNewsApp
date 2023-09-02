@@ -7,7 +7,7 @@
 * Displays news from USA.
 
   <p float="left">
-  <img src="/newsHome.png" width="100" />
+  <img src="newsHome.png" width="100" />
   <img src="/img2.png" width="100" /> 
   <img src="/img3.png" width="100" />
 </p>
