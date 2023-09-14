@@ -3,25 +3,20 @@ buildscript {
 
     repositories {
         google()
-
     }
 
-
     dependencies {
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0-alpha04"
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1'
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.44.2'
     }
 }
 
 plugins {
-
-    id 'com.android.library' version '7.2.2' apply false
+    id 'com.android.library' version '7.4.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
     id 'com.google.dagger.hilt.android' version '2.44' apply false
 
-
 }
-
 
 task clean(type: Delete) {
     delete rootProject.buildDir

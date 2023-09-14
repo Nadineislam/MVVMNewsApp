@@ -13,9 +13,8 @@ import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentSavedNewsBinding
 import com.example.newsapp.mvvmnewsapp.presentation.adapters.NewsAdapter
 import com.example.newsapp.mvvmnewsapp.presentation.ui.activities.NewsActivity
-import com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel.NewsViewModel
+import com.example.newsapp.mvvmnewsapp.presentation.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_saved_news.*
 
 class SavedNewsFragment : Fragment() {
     private lateinit var binding: FragmentSavedNewsBinding
@@ -70,7 +69,7 @@ class SavedNewsFragment : Fragment() {
             }
         }
         ItemTouchHelper(itemTouchHelperCallBack).apply {
-            attachToRecyclerView(rv_savedNews)
+            attachToRecyclerView(binding.rvSavedNews)
         }
 
         viewModel.getSavedNews().observe(viewLifecycleOwner) { articles ->

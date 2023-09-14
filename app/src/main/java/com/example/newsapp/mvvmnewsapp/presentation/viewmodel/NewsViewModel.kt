@@ -1,4 +1,4 @@
-package com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel
+package com.example.newsapp.mvvmnewsapp.presentation.viewmodel
 
 
 import android.app.Application

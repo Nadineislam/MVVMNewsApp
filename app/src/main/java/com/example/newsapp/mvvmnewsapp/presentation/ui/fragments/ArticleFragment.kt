@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.newsapp.databinding.FragmentArticleBinding
 import com.example.newsapp.mvvmnewsapp.presentation.ui.activities.NewsActivity
-import com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel.NewsViewModel
+import com.example.newsapp.mvvmnewsapp.presentation.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class ArticleFragment : Fragment() {

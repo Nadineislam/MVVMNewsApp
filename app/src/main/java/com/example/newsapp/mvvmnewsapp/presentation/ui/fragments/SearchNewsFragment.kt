@@ -9,9 +9,7 @@ import android.widget.AbsListView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +17,10 @@ import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentSearchNewsBinding
 import com.example.newsapp.mvvmnewsapp.presentation.adapters.NewsAdapter
 import com.example.newsapp.mvvmnewsapp.presentation.ui.activities.NewsActivity
-import com.example.newsapp.mvvmnewsapp.presentation.ui.viewmodel.NewsViewModel
+import com.example.newsapp.mvvmnewsapp.presentation.viewmodel.NewsViewModel
 import com.example.newsapp.mvvmnewsapp.data.util.Constants
 import com.example.newsapp.mvvmnewsapp.data.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.example.newsapp.mvvmnewsapp.data.util.Resource
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -72,7 +68,6 @@ class SearchNewsFragment : Fragment() {
             }
         }
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.searchNews.collect{response->
                     when(response){
                         is Resource.Loading->showProgressBar()
@@ -82,7 +77,7 @@ class SearchNewsFragment : Fragment() {
                                 val totalPages = newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
                                 isLastPage = viewModel.breakingNewsPage == totalPages
                                 if (isLastPage) {
-                                    rv_breakingNews.setPadding(0, 0, 0, 0)
+                                    binding.rvSearchNews.setPadding(0, 0, 0, 0)
                                 }
                             }}
                         is Resource.Error->response.message?.let { message->
@@ -90,7 +85,6 @@ class SearchNewsFragment : Fragment() {
                         }
                     }
                 }
-            }
         }
 
     }
@@ -139,7 +133,7 @@ class SearchNewsFragment : Fragment() {
             val shouldPaginate =
                 isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
             if (shouldPaginate) {
-                viewModel.getSearchNews(et_search.text.toString())
+                viewModel.getSearchNews(binding.etSearch.text.toString())
                 isScrolling = false
             }
 
